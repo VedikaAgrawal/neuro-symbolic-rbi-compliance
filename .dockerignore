@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Node/Frontend files
+node_modules/
+dist/
+.svelte-kit/
+
+# Git and OS metadata
+.git
+.github
+.gitignore
+.DS_Store
+
+# Local secrets (never bake secrets into docker images)
+.env
+.env*.local
