@@ -134,7 +134,7 @@ Both the React dev server and the FastAPI server must be run simultaneously.
    ```
 2. Open `backend/.env` and paste your Gemini API key:
    ```env
-   GEMINI_API_KEY=AIzaSyA...your_key_here
+   GEMINI_API_KEY=...your_key_here
    ```
    *(If left blank, the server runs using a local Regex-based parser).*
 3. Run the FastAPI ASGI server:
@@ -169,12 +169,12 @@ The application stores rule configurations and logs query results using a Supaba
 
 #### 3. Configure Environment Variables
 1. Go to **Project Settings** -> **API** in the Supabase Dashboard.
-2. **Frontend Config**: Copy the **Project URL** and the **`anon` `public`** key, then add them to your root [.env](.env) file:
+2. **Frontend Config**: Copy the **Project URL** and the **`anon` `public`** key, then add them to your root .env file:
    ```env
    VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_ANON_KEY=your-anon-public-key
    ```
-3. **Backend Config**: Copy the **`service_role` (secret)** key (this admin key is required so the backend can bypass RLS constraints for seeding/logging), then add it to your [backend/.env](file:///Users/vedikaagrawal/Documents/major_sem_4_2/backend/.env) file:
+3. **Backend Config**: Copy the **`service_role` (secret)** key (this admin key is required so the backend can bypass RLS constraints for seeding/logging), then add it to your backend/.env file:
    ```env
    SUPABASE_URL=https://your-project.supabase.co
    SUPABASE_KEY=your-service-role-key
