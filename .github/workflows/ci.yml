@@ -1,0 +1,77 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 1. Verify Frontend React TypeScript Code
+  frontend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check TypeScript Compilation
+        run: npm run typecheck
+
+      - name: Production Build test
+        run: npm run build
+
+  # 2. Verify Python Backend & Z3 Solver Logic
+  backend-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Verify Symbolic SMT Solver Logic
+        run: |
+          python -c "
+          from backend.solver import verify
+          # Run a simple check to verify the SMT solver is initialized and functioning
+          test_facts = {
+              'action': 'loan',
+              'amount': 10000.0,
+              'kyc_status': 'full',
+              'loan_type': 'personal',
+              'has_itr': True,
+              'itr_years': 3,
+              'has_collateral': False,
+              'has_audited_financials': False,
+              'cibil_score': 750,
+              'annual_income': 500000.0,
+              'annual_credit': 0.0,
+              'current_balance': 0.0,
+              'has_kfs': True,
+              'dlg_percentage': 0.0,
+              'disburse_to': 'bank_account',
+              'reporting_days': 0,
+              'account_type': 'full_kyc'
+          }
+          result = verify(test_facts)
+          print('SMT Solver verification result:', result['verdict'])
+          assert result['verdict'] == 'SAT', 'SMT Solver check failed'
+          "
