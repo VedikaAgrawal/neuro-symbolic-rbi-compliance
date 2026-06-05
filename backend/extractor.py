@@ -17,16 +17,18 @@ load_dotenv()
 
 # Initialize Google Generative AI if key is present
 GEMINI_ACTIVE = False
+client = None
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
     api_key = os.getenv("GEMINI_API_KEY")
     if api_key and api_key.strip():
-        genai.configure(api_key=api_key)
+        client = genai.Client(api_key=api_key)
         GEMINI_ACTIVE = True
     else:
         print("WARNING: GEMINI_API_KEY is empty. Running with Regex Fallback.")
 except ImportError:
-    print("WARNING: google-generativeai package not installed. Running with Regex Fallback.")
+    print("WARNING: google-genai package not installed. Running with Regex Fallback.")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -271,26 +273,23 @@ def extract_facts_from_query(query: str) -> dict[str, Any]:
     Extract structured facts from a natural language query using Google Gemini.
     Falls back gracefully to procedural regex rules if Gemini is inactive or fails.
     """
-    if not GEMINI_ACTIVE:
+    if not GEMINI_ACTIVE or client is None:
         return fallback_extract_facts_from_query(query)
 
     try:
-        model = genai.GenerativeModel(
-            model_name="gemini-3.5-flash",
-            system_instruction=(
-                "You are an expert NLP parser designed to extract compliance-relevant facts from financial queries. "
-                "You must strictly parse inputs into the provided JSON schema. Ensure currency words are converted "
-                "into raw floating-point numbers in Rupees (INR) (e.g., '1 crore' -> 10000000.0, '50 lakh' -> 5000000.0). "
-                "Infer properties logically. For example, if a user mentions 'applying via fintech app' or 'BNPL', action is 'digital_loan'. "
-                "If they complain about a card charge or fraud, action is 'dispute_unauthorized'."
-            )
-        )
-        
         prompt = f"Extract compliance entities from the following user query:\n\n\"{query}\""
         
-        response = model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
+        response = client.models.generate_content(
+            model="gemini-3.5-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=(
+                    "You are an expert NLP parser designed to extract compliance-relevant facts from financial queries. "
+                    "You must strictly parse inputs into the provided JSON schema. Ensure currency words are converted "
+                    "into raw floating-point numbers in Rupees (INR) (e.g., '1 crore' -> 10000000.0, '50 lakh' -> 5000000.0). "
+                    "Infer properties logically. For example, if a user mentions 'applying via fintech app' or 'BNPL', action is 'digital_loan'. "
+                    "If they complain about a card charge or fraud, action is 'dispute_unauthorized'."
+                ),
                 response_mime_type="application/json",
                 response_schema=ExtractedFactsSchema,
                 temperature=0.1
