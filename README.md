@@ -119,7 +119,7 @@ major_sem_4_2/
 ├── package.json              # Frontend manifest & npm dependencies
 ├── tsconfig.json             # TypeScript compiler settings
 └── tailwind.config.js        # Design tokens & glassmorphism configurations
-```
+``` 
 
 ---
 
