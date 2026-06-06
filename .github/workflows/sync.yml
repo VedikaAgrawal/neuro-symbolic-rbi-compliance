@@ -29,20 +29,19 @@ jobs:
           cp list_models.py deploy_hf/
           
           # Create the required Hugging Face configuration README.md
-          cat <<EOF > deploy_hf/README.md
----
-title: Neuro-Symbolic Compliance API
-emoji: 🛡️
-colorFrom: cyan
-colorTo: blue
-sdk: docker
-app_port: 7860
-pinned: false
----
+          echo "---" > deploy_hf/README.md
+          echo "title: Neuro-Symbolic Compliance API" >> deploy_hf/README.md
+          echo "emoji: 🛡️" >> deploy_hf/README.md
+          echo "colorFrom: cyan" >> deploy_hf/README.md
+          echo "colorTo: blue" >> deploy_hf/README.md
+          echo "sdk: docker" >> deploy_hf/README.md
+          echo "app_port: 7860" >> deploy_hf/README.md
+          echo "pinned: false" >> deploy_hf/README.md
+          echo "---" >> deploy_hf/README.md
+          echo "" >> deploy_hf/README.md
+          echo "# Neuro-Symbolic Compliance API" >> deploy_hf/README.md
+          echo "Backend FastAPI verification service using Gemini and Z3 SMT Solver." >> deploy_hf/README.md
 
-# Neuro-Symbolic Compliance API
-Backend FastAPI verification service using Gemini and Z3 SMT Solver.
-EOF
           
           # Initialize fresh git repository inside deployment folder
           cd deploy_hf
