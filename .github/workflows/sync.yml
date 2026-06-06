@@ -32,7 +32,7 @@ jobs:
           echo "---" > deploy_hf/README.md
           echo "title: Neuro-Symbolic Compliance API" >> deploy_hf/README.md
           echo "emoji: 🛡️" >> deploy_hf/README.md
-          echo "colorFrom: cyan" >> deploy_hf/README.md
+          echo "colorFrom: indigo" >> deploy_hf/README.md
           echo "colorTo: blue" >> deploy_hf/README.md
           echo "sdk: docker" >> deploy_hf/README.md
           echo "app_port: 7860" >> deploy_hf/README.md
