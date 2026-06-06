@@ -201,7 +201,7 @@ function App() {
                 {error}
               </p>
               <p className="text-xs text-rose-500 pt-1 font-mono">
-                Troubleshoot: Verify the FastAPI server is listening at http://localhost:8000
+                Troubleshoot: Verify the FastAPI server is listening at {import.meta.env.VITE_API_URL || "http://localhost:8000"}
               </p>
             </div>
           )}
