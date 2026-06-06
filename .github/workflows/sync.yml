@@ -21,4 +21,4 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           # Push directly to Hugging Face repository using write-access Token
-          git push --force https://vedika24:$HF_TOKEN@huggingface.co/spaces/vedika24/neuro-symbolic-compliance-api main
+          git push --force https://vedika24:$HF_TOKEN@huggingface.co/spaces/vedika24/neuro-symbolic-compliance-api.git main
