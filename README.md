@@ -1,7 +1,14 @@
 # AI-Powered RBI Banking Compliance Verifier
 ### *Hybrid Neuro-Symbolic Financial Guardrails (LLM + Z3 SMT Solver)*
 
+[![Frontend & Backend CI](https://github.com/VedikaAgrawal/neuro-symbolic-rbi-compliance/actions/workflows/ci.yml/badge.svg)](https://github.com/VedikaAgrawal/neuro-symbolic-rbi-compliance/actions/workflows/ci.yml)
+[![Sync to Hugging Face](https://github.com/VedikaAgrawal/neuro-symbolic-rbi-compliance/actions/workflows/sync.yml/badge.svg)](https://github.com/VedikaAgrawal/neuro-symbolic-rbi-compliance/actions/workflows/sync.yml)
+
 An advanced, research-grade **Full-Stack compliance verification engine** designed for Indian Fintech and banking applications. 
+
+🚀 **Live Web App**: [https://neuro-symbolic-rbi-compliance.vercel.app](https://neuro-symbolic-rbi-compliance.vercel.app) *(Note: Paste your exact Vercel URL here if it differs!)*
+🐳 **Live API Server**: [https://huggingface.co/spaces/vedika24/neuro-symbolic-compliance-api](https://huggingface.co/spaces/vedika24/neuro-symbolic-compliance-api)
+
 
 * **The Problem**: RBI guidelines are massive (thousands of pages), complex, and change constantly.
 * **The Risk**: If a bank makes a mistake—such as giving a ₹1.5 Crore loan to someone without verifying their collateral, or allowing high-value transfers on an unverified OTP account—they are non-compliant. The RBI can penalize them with millions of rupees in fines, legal audits, or even cancel their banking license.
