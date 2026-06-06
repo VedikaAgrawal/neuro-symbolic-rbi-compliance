@@ -28,6 +28,22 @@ jobs:
           cp test_gemini.py deploy_hf/
           cp list_models.py deploy_hf/
           
+          # Create the required Hugging Face configuration README.md
+          cat <<EOF > deploy_hf/README.md
+---
+title: Neuro-Symbolic Compliance API
+emoji: 🛡️
+colorFrom: cyan
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
+# Neuro-Symbolic Compliance API
+Backend FastAPI verification service using Gemini and Z3 SMT Solver.
+EOF
+          
           # Initialize fresh git repository inside deployment folder
           cd deploy_hf
           git init
@@ -35,10 +51,11 @@ jobs:
           git config --global user.name "GitHub Actions"
           git checkout -b main
           git add .
-          git commit -m "sync: deploy backend API code"
+          git commit -m "sync: deploy backend API code with metadata"
           
           # Force push only the backend code to Hugging Face Space
           git remote add hf https://vedika24:$HF_TOKEN@huggingface.co/spaces/vedika24/neuro-symbolic-compliance-api
           git push --force hf main
+
 
 
