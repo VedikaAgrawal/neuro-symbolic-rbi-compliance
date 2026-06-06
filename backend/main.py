@@ -6,6 +6,7 @@ Securely manages the Neuro-Symbolic flow, invokes Gemini and Z3, and writes logs
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing import Any
 import os
@@ -74,6 +75,12 @@ class VerificationResponse(BaseModel):
 # ─────────────────────────────────────────────────────────────────────────────
 # API Endpoints
 # ─────────────────────────────────────────────────────────────────────────────
+
+@app.get("/")
+def read_root():
+    """Redirect root access to interactive API documentation."""
+    return RedirectResponse(url="/docs")
+
 
 @app.get("/health")
 def health():
