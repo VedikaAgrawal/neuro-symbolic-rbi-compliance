@@ -40,6 +40,14 @@ This system uses a hybrid approach to bridge unstructured human input with forma
 3. **Database Logging Layer (PostgreSQL)**: Logs transaction queries, verdicts, and violations securely to **Supabase** via backend API controllers.
 4. **Actionable Compliance UI**: Renders verdicts, document checklists, and counterfactual resolution roadmaps dynamically inside a sleek, dark-theme glassmorphic React app.
 
+### 🗂️ Knowledge Graph Mapping & Relational Ontology Enforcements
+
+While executing deterministically via first-order symbolic logic, the underlying pipeline directly mirrors the data lifecycle of an ontology-driven Knowledge Graph (KG) framework:
+
+* **Semantic Entity & Relation Extraction:** Unstructured natural language financial payloads are programmatically parsed by the neural layer into structured nodes (e.g., `User`, `Account`, `Transaction`) and explicitly typed directional dependencies (edges) such as `[:REQUESTED_BY]` or `[:TRANSFERRED_TO]`.
+* **Ontology Blueprint Guardrails:** The system matches incoming extracted data schemas against a rigid domain registry model. This registry acts as a structural data ontology, enforcing semantic constraints and properties (e.g., tracking `KYC_Status` or `Transaction_Volume` bounds) to completely neutralize LLM hallucinations before logic evaluation.
+* **Multi-Hop Relational Inference:** The Z3 SMT Solver evaluates the system state by traversing connected entity conditions simultaneously (e.g., determining the legal validity of a transaction path based on interconnected account verification types and credit limits). This functions identically to an advanced semantic reasoner operating over a relational graph topology.
+
 ### 🧱 Hybrid Neuro-Symbolic Architecture
 
 This block diagram represents how data flows from unstructured input through the neural and symbolic compliance gates:
@@ -101,7 +109,7 @@ sequenceDiagram
 major_sem_4_2/
 ├── backend/                  # Python FastAPI API Server
 │   ├── extractor.py          # Gemini structured fact parsing & plaintext summaries
-│   ├── rules.py              # Central registry of RBI rule metadata & parameters
+│   ├── rules.py              # System ontology registry (Rule metadata, parameters, and relational bounds)
 │   ├── solver.py             # Z3 SMT Solver constraint formulations & checks
 │   ├── main.py               # API endpoints & Supabase logging controller
 │   ├── requirements.txt      # Python dependencies (z3-solver, fastapi, etc.)
