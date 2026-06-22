@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 # Import our neural and symbolic components
 from backend.extractor import extract_facts_from_query, generate_explanation
-from backend.solver import verify
+from backend.solver import verify, generate_counterfactual_via_z3
 from backend.rules import ALL_RULES
 
 # Load environment variables
@@ -140,38 +140,7 @@ def verify_query(request: QueryRequest):
     # Phase 3: Max-SMT Counterfactual Guidance
     counterfactual = ""
     if verdict == "UNSAT":
-        amount = facts.get("amount", 0)
-        action = facts.get("action", "request")
-        
-        if action in ("loan", "loan_apply", "personal_loan"):
-            if amount >= 1_00_00_000:
-                counterfactual = (
-                    "To satisfy compliance: Complete Full KYC, submit ITR for the last 3 financial years, "
-                    "maintain a CIBIL score ≥ 750, and provide legally cleared collateral worth at least 125% of the loan amount."
-                )
-            elif amount >= 25_00_000:
-                counterfactual = (
-                    "To satisfy compliance: Submit ITR for the last 2 financial years, ensure a CIBIL score ≥ 700, "
-                    "and complete Full KYC. Alternatively, reducing the loan amount below ₹25,00,000 relaxes these criteria."
-                )
-            else:
-                counterfactual = (
-                    "Ensure Full KYC is completed and standard identification papers (PAN + Aadhaar) are submitted."
-                )
-        elif action == "transfer" and facts.get("account_type") in ("small", "otp_only"):
-            counterfactual = (
-                "To transfer amounts above ₹10,000: Upgrade your limited KYC account to Full KYC (via V-CIP video process "
-                "or physical branch visit). Otherwise, keep individual transfers capped strictly below ₹10,000."
-            )
-        elif action == "credit_card_apply":
-            counterfactual = (
-                "To satisfy compliance: Ensure your net annual income is at least ₹3,00,000 and submit income proof (salary slips / ITR)."
-            )
-        elif action == "digital_loan":
-            counterfactual = (
-                "To satisfy compliance: Fully review and acknowledge the Key Fact Statement (KFS) before proceeding, "
-                "ensure disbursal is set to a verified bank account (not a prepaid wallet), and DLG is capped under 5%."
-            )
+        counterfactual = generate_counterfactual_via_z3(facts)
 
     # Phase 4: Explanation Generation
     explanation = generate_explanation(

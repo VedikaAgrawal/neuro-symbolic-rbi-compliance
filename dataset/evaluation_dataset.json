@@ -1,0 +1,1649 @@
+[
+  {
+    "id": 1,
+    "query": "I need a business loan of \u20b912,000,000. I have none KYC, a CIBIL of 600, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 12000000.0,
+      "kyc_status": "none",
+      "loan_type": "business",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 600,
+      "annual_income": 3600000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 2,
+    "query": "Applying for an online app loan of \u20b975,000. Geolocation captured, KFS: Key Fact Statement. Disbursal target: bank account.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "bank_account",
+      "dlg_percentage": 7.5
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Default Loss Guarantee (DLG) in digital lending cannot exceed the 5% regulatory portfolio cap."
+    ]
+  },
+  {
+    "id": 3,
+    "query": "I want to apply for a personal loan of \u20b93,500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 3500000.0,
+      "kyc_status": "limited",
+      "loan_type": "personal",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": false,
+      "cibil_score": 680,
+      "annual_income": 1050000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Unsecured personal loan amount \u20b93,500,000 exceeds legal limit of \u20b910,00,000 without collateral.",
+      "Loans above \u20b925,00,000 require at least 2 years of ITR and a minimum CIBIL score of 700."
+    ]
+  },
+  {
+    "id": 4,
+    "query": "I need a vehicle loan of \u20b93,500,000. I have none KYC, a CIBIL of 760, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 3500000.0,
+      "kyc_status": "none",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 760,
+      "annual_income": 1050000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 5,
+    "query": "Applying for a \u20b92,400,000 vehicle loan. I have with property collateral and CIBIL of 720.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 2400000.0,
+      "kyc_status": "limited",
+      "loan_type": "vehicle",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 720,
+      "annual_income": 720000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 6,
+    "query": "I need a business loan of \u20b915,000,000. I have none KYC, a CIBIL of 600, and without collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 15000000.0,
+      "kyc_status": "none",
+      "loan_type": "business",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": false,
+      "cibil_score": 600,
+      "annual_income": 4500000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 7,
+    "query": "Initiate a digital credit of \u20b945,000. Disbursal: third party account. DLG rate: 4.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 45000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 4.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 8,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 9,
+    "query": "Please send \u20b912,000 from my otp/only account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 12000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 15000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b912,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 10,
+    "query": "I need a education loan of \u20b915,000,000. I have full KYC, a CIBIL of 600, and without collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 15000000.0,
+      "kyc_status": "full",
+      "loan_type": "education",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": false,
+      "cibil_score": 600,
+      "annual_income": 4500000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 11,
+    "query": "I want to apply for a personal loan of \u20b9800,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "limited",
+      "loan_type": "personal",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 600,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 12,
+    "query": "I want to apply for a personal loan of \u20b912,000,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 12000000.0,
+      "kyc_status": "limited",
+      "loan_type": "personal",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": false,
+      "cibil_score": 680,
+      "annual_income": 3600000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Unsecured personal loan amount \u20b912,000,000 exceeds legal limit of \u20b910,00,000 without collateral.",
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 13,
+    "query": "Report fraudulent transaction on my credit card that happened 5 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 5
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 14,
+    "query": "Can I get an online personal loan of \u20b975,000 to my wallet?",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "wallet",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 15,
+    "query": "Apply for a credit card. My net annual income is \u20b9500,000.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 500000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 16,
+    "query": "Requesting a vehicle loan of \u20b94,500,000. Collateral: without collateral. ITR status: ITR filed for 3 years years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 4500000.0,
+      "kyc_status": "full",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 720,
+      "annual_income": 1350000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 17,
+    "query": "I want to transfer \u20b95,000 using my full/kyc account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 5000.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 80000.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 18,
+    "query": "Initiate a digital credit of \u20b9150,000. Disbursal: third party account. DLG rate: 4.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 150000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 4.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 19,
+    "query": "Requesting a personal loan of \u20b92,400,000. Collateral: without collateral. ITR status: ITR filed for 3 years years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 2400000.0,
+      "kyc_status": "full",
+      "loan_type": "personal",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 680,
+      "annual_income": 720000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Unsecured personal loan amount \u20b92,400,000 exceeds legal limit of \u20b910,00,000 without collateral."
+    ]
+  },
+  {
+    "id": 20,
+    "query": "Can I get an online personal loan of \u20b9150,000 to my third party account?",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 150000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 4.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 21,
+    "query": "I need a personal loan of \u20b9800,000. I have none KYC, a CIBIL of 600, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "none",
+      "loan_type": "personal",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 600,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 22,
+    "query": "Initiate a digital credit of \u20b9150,000. Disbursal: third party account. DLG rate: 4.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 150000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 4.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 23,
+    "query": "I need to pay a vendor \u20b955,000 from my otp/only balance.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 55000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 15000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b955,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 24,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 8500.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 25,
+    "query": "Please send \u20b9120,000 from my otp/only account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 120000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 0.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b9120,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 26,
+    "query": "Requesting a home loan of \u20b915,000,000. Collateral: without collateral. ITR status: ITR filed for 3 years years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 15000000.0,
+      "kyc_status": "none",
+      "loan_type": "home",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 760,
+      "annual_income": 4500000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 27,
+    "query": "Applying for an online app loan of \u20b945,000. Geolocation captured, KFS: no document disclosures. Disbursal target: bank account.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 45000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "bank_account",
+      "dlg_percentage": 4.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans."
+    ]
+  },
+  {
+    "id": 28,
+    "query": "I want to apply for a business loan of \u20b9500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "none",
+      "loan_type": "business",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 0,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 29,
+    "query": "Applying for a \u20b92,400,000 home loan. I have with property collateral and CIBIL of 680.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 2400000.0,
+      "kyc_status": "none",
+      "loan_type": "home",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 680,
+      "annual_income": 720000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 30,
+    "query": "Initiate a digital credit of \u20b975,000. Disbursal: bank account. DLG rate: 5.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "bank_account",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans."
+    ]
+  },
+  {
+    "id": 31,
+    "query": "Can I transfer \u20b955,000 with a limited KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 55000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 15000.0,
+      "current_balance": 49000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b955,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 32,
+    "query": "I want to transfer \u20b925,000 using my small account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 80000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 33,
+    "query": "Initiate a digital credit of \u20b9150,000. Disbursal: third party account. DLG rate: 0.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 150000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 34,
+    "query": "Can I transfer \u20b912,000 with a none KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 12000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 95000.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b912,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 35,
+    "query": "I want to apply for a personal loan of \u20b9500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "full",
+      "loan_type": "personal",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 720,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 36,
+    "query": "I need to pay a vendor \u20b95,000 from my full/kyc balance.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 5000.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 80000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 37,
+    "query": "I need a home loan of \u20b92,400,000. I have limited KYC, a CIBIL of 760, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 2400000.0,
+      "kyc_status": "limited",
+      "loan_type": "home",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": true,
+      "cibil_score": 760,
+      "annual_income": 720000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 38,
+    "query": "I want to transfer \u20b925,000 using my otp/only account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 95000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 39,
+    "query": "Please send \u20b925,000 from my otp/only account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 80000.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 40,
+    "query": "I want to apply for credit card. Income: \u20b9280,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 280000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card issuance requires a minimum annual net income of \u20b93,00,000."
+    ]
+  },
+  {
+    "id": 41,
+    "query": "Can I transfer \u20b925,000 with a none KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 0.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000."
+    ]
+  },
+  {
+    "id": 42,
+    "query": "I want to apply for credit card. Income: \u20b9500,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 500000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 43,
+    "query": "Can I transfer \u20b925,000 with a none KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 95000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded."
+    ]
+  },
+  {
+    "id": 44,
+    "query": "Applying for an online app loan of \u20b915,000. Geolocation captured, KFS: no document disclosures. Disbursal target: wallet.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 15000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "wallet",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 45,
+    "query": "I want to transfer \u20b948,000 using my full/kyc account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 48000.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 15000.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 46,
+    "query": "Can I transfer \u20b925,000 with a none KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 0.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000."
+    ]
+  },
+  {
+    "id": 47,
+    "query": "Initiate a digital credit of \u20b915,000. Disbursal: third party account. DLG rate: 5.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 15000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 48,
+    "query": "Disputing an unauthorized charge of \u20b915,000 on my credit card reported 12 days after the incident.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 49,
+    "query": "I need a vehicle loan of \u20b9800,000. I have none KYC, a CIBIL of 760, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "none",
+      "loan_type": "vehicle",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 760,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 50,
+    "query": "Please send \u20b99,500 from my full/kyc account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 9500.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 0.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 51,
+    "query": "Applying for a \u20b91,200,000 personal loan. I have without collateral and CIBIL of 600.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 1200000.0,
+      "kyc_status": "none",
+      "loan_type": "personal",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": false,
+      "cibil_score": 600,
+      "annual_income": 360000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Unsecured personal loan amount \u20b91,200,000 exceeds legal limit of \u20b910,00,000 without collateral."
+    ]
+  },
+  {
+    "id": 52,
+    "query": "I want to transfer \u20b9120,000 using my small account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 120000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 95000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b9120,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 53,
+    "query": "Applying for an online app loan of \u20b915,000. Geolocation captured, KFS: Key Fact Statement. Disbursal target: wallet.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 15000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "wallet",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 54,
+    "query": "I need a vehicle loan of \u20b9500,000. I have none KYC, a CIBIL of 680, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "none",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 680,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 55,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 2000.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 56,
+    "query": "Disputing an unauthorized charge of \u20b915,000 on my credit card reported 2 days after the incident.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 2
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 57,
+    "query": "Initiate a digital credit of \u20b975,000. Disbursal: wallet. DLG rate: 0.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "wallet",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 58,
+    "query": "I need to pay a vendor \u20b925,000 from my full/kyc balance.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 95000.0,
+      "current_balance": 45000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 59,
+    "query": "Applying for a \u20b9500,000 business loan. I have with property collateral and CIBIL of unknown.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "none",
+      "loan_type": "business",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": true,
+      "cibil_score": 0,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 60,
+    "query": "Applying for an online app loan of \u20b945,000. Geolocation captured, KFS: no document disclosures. Disbursal target: wallet.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 45000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "wallet",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 61,
+    "query": "I want to apply for credit card. Income: \u20b9180,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 180000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card issuance requires a minimum annual net income of \u20b93,00,000."
+    ]
+  },
+  {
+    "id": 62,
+    "query": "Please send \u20b99,500 from my full/kyc account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 9500.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 80000.0,
+      "current_balance": 49000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 63,
+    "query": "Requesting a home loan of \u20b9500,000. Collateral: with property collateral. ITR status: ITR filed for 3 years years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "full",
+      "loan_type": "home",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 600,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 64,
+    "query": "I want to apply for a business loan of \u20b92,400,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 2400000.0,
+      "kyc_status": "none",
+      "loan_type": "business",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": true,
+      "cibil_score": 600,
+      "annual_income": 720000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 65,
+    "query": "I want to apply for a personal loan of \u20b9500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 500000.0,
+      "kyc_status": "limited",
+      "loan_type": "personal",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 0,
+      "annual_income": 150000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 66,
+    "query": "I want to apply for a vehicle loan of \u20b94,500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 4500000.0,
+      "kyc_status": "full",
+      "loan_type": "vehicle",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": false,
+      "cibil_score": 680,
+      "annual_income": 1350000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Loans above \u20b925,00,000 require at least 2 years of ITR and a minimum CIBIL score of 700."
+    ]
+  },
+  {
+    "id": 67,
+    "query": "I need a home loan of \u20b9800,000. I have none KYC, a CIBIL of 680, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "none",
+      "loan_type": "home",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 680,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 68,
+    "query": "Initiate a fund transfer of \u20b99,500 from an small account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 9500.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 80000.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 69,
+    "query": "Please send \u20b955,000 from my small account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 55000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 95000.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b955,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 70,
+    "query": "I want to apply for credit card. Income: \u20b9320,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 320000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 71,
+    "query": "Initiate a fund transfer of \u20b925,000 from an otp/only account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 0.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000."
+    ]
+  },
+  {
+    "id": 72,
+    "query": "I need a business loan of \u20b93,500,000. I have full KYC, a CIBIL of 760, and without collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 3500000.0,
+      "kyc_status": "full",
+      "loan_type": "business",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": false,
+      "cibil_score": 760,
+      "annual_income": 1050000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Loans above \u20b925,00,000 require at least 2 years of ITR and a minimum CIBIL score of 700."
+    ]
+  },
+  {
+    "id": 73,
+    "query": "Can I transfer \u20b99,500 with a full KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 9500.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 0.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 74,
+    "query": "Apply for a credit card. My net annual income is \u20b9320,000.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 320000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 75,
+    "query": "Applying for an online app loan of \u20b975,000. Geolocation captured, KFS: no document disclosures. Disbursal target: wallet.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "wallet",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 76,
+    "query": "Applying for an online app loan of \u20b9150,000. Geolocation captured, KFS: Key Fact Statement. Disbursal target: third party account.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 150000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "third_party_account",
+      "dlg_percentage": 7.5
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited.",
+      "Default Loss Guarantee (DLG) in digital lending cannot exceed the 5% regulatory portfolio cap."
+    ]
+  },
+  {
+    "id": 77,
+    "query": "I want to apply for a vehicle loan of \u20b9800,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "none",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 3,
+      "has_collateral": true,
+      "cibil_score": 0,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 78,
+    "query": "Apply for a credit card. My net annual income is \u20b9500,000.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 500000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 79,
+    "query": "Report fraudulent transaction on my credit card that happened 8 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 8500.0,
+      "reporting_days": 8
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 80,
+    "query": "Initiate a fund transfer of \u20b9120,000 from an small account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 120000.0,
+      "kyc_status": "none",
+      "account_type": "small",
+      "annual_credit": 15000.0,
+      "current_balance": 500.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b9120,000 exceeds Small Account limit of \u20b910,000.",
+      "Small Account annual credits limit of \u20b91,00,000 would be exceeded.",
+      "Small Account maximum balance cap of \u20b950,000 would be exceeded.",
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 81,
+    "query": "I need a vehicle loan of \u20b91,200,000. I have full KYC, a CIBIL of unknown, and without collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 1200000.0,
+      "kyc_status": "full",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": false,
+      "cibil_score": 0,
+      "annual_income": 360000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 82,
+    "query": "Can I transfer \u20b925,000 with a limited KYC level?",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 25000.0,
+      "kyc_status": "limited",
+      "account_type": "otp_only",
+      "annual_credit": 15000.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Single transfer amount \u20b925,000 exceeds Small Account limit of \u20b910,000."
+    ]
+  },
+  {
+    "id": 83,
+    "query": "Requesting a home loan of \u20b94,500,000. Collateral: without collateral. ITR status: no ITR records years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 4500000.0,
+      "kyc_status": "limited",
+      "loan_type": "home",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": false,
+      "cibil_score": 0,
+      "annual_income": 1350000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans above \u20b925,00,000 require at least 2 years of ITR and a minimum CIBIL score of 700."
+    ]
+  },
+  {
+    "id": 84,
+    "query": "I want to apply for a vehicle loan of \u20b93,500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 3500000.0,
+      "kyc_status": "none",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": false,
+      "cibil_score": 720,
+      "annual_income": 1050000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 85,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 86,
+    "query": "Please send \u20b99,500 from my full/kyc account.",
+    "ground_truth": {
+      "action": "transfer",
+      "amount": 9500.0,
+      "kyc_status": "full",
+      "account_type": "full_kyc",
+      "annual_credit": 0.0,
+      "current_balance": 10000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 87,
+    "query": "Report fraudulent transaction on my credit card that happened 8 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 2000.0,
+      "reporting_days": 8
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 88,
+    "query": "Requesting a education loan of \u20b915,000,000. Collateral: with property collateral. ITR status: no ITR records years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 15000000.0,
+      "kyc_status": "none",
+      "loan_type": "education",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 680,
+      "annual_income": 4500000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans of \u20b91 Crore+ require Full KYC, ITR for 3 years, CIBIL score \u2265 750, and collateral security."
+    ]
+  },
+  {
+    "id": 89,
+    "query": "I need a personal loan of \u20b9800,000. I have full KYC, a CIBIL of unknown, and with property collateral.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 800000.0,
+      "kyc_status": "full",
+      "loan_type": "personal",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 0,
+      "annual_income": 240000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 90,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 8500.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  },
+  {
+    "id": 91,
+    "query": "Applying for an online app loan of \u20b945,000. Geolocation captured, KFS: Key Fact Statement. Disbursal target: wallet.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 45000.0,
+      "kyc_status": "full",
+      "has_kfs": true,
+      "disburse_to": "wallet",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 92,
+    "query": "I want to apply for a education loan of \u20b94,500,000.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 4500000.0,
+      "kyc_status": "limited",
+      "loan_type": "education",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 720,
+      "annual_income": 1350000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000.",
+      "Loans above \u20b925,00,000 require at least 2 years of ITR and a minimum CIBIL score of 700."
+    ]
+  },
+  {
+    "id": 93,
+    "query": "Initiate a digital credit of \u20b945,000. Disbursal: wallet. DLG rate: 5.0%.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 45000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "wallet",
+      "dlg_percentage": 5.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans.",
+      "Digital loan disbursals directly to prepaid wallets or third-party accounts are prohibited."
+    ]
+  },
+  {
+    "id": 94,
+    "query": "Applying for an online app loan of \u20b975,000. Geolocation captured, KFS: no document disclosures. Disbursal target: bank account.",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "bank_account",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans."
+    ]
+  },
+  {
+    "id": 95,
+    "query": "I want to apply for credit card. Income: \u20b9280,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 280000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card issuance requires a minimum annual net income of \u20b93,00,000."
+    ]
+  },
+  {
+    "id": 96,
+    "query": "I want to apply for credit card. Income: \u20b9280,000. No defaults.",
+    "ground_truth": {
+      "action": "credit_card_apply",
+      "amount": 0.0,
+      "annual_income": 280000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card issuance requires a minimum annual net income of \u20b93,00,000."
+    ]
+  },
+  {
+    "id": 97,
+    "query": "Can I get an online personal loan of \u20b975,000 to my bank account?",
+    "ground_truth": {
+      "action": "digital_loan",
+      "amount": 75000.0,
+      "kyc_status": "full",
+      "has_kfs": false,
+      "disburse_to": "bank_account",
+      "dlg_percentage": 0.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Key Fact Statement (KFS) must be explicitly provided and acknowledged for digital loans."
+    ]
+  },
+  {
+    "id": 98,
+    "query": "Requesting a personal loan of \u20b91,200,000. Collateral: with property collateral. ITR status: no ITR records years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 1200000.0,
+      "kyc_status": "none",
+      "loan_type": "personal",
+      "has_itr": false,
+      "itr_years": 0,
+      "has_collateral": true,
+      "cibil_score": 680,
+      "annual_income": 360000.0
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Full KYC (Aadhaar + PAN) is mandatory for transactions or loans exceeding \u20b950,000."
+    ]
+  },
+  {
+    "id": 99,
+    "query": "Requesting a vehicle loan of \u20b91,200,000. Collateral: without collateral. ITR status: ITR filed for 2 years years.",
+    "ground_truth": {
+      "action": "loan",
+      "amount": 1200000.0,
+      "kyc_status": "full",
+      "loan_type": "vehicle",
+      "has_itr": true,
+      "itr_years": 2,
+      "has_collateral": false,
+      "cibil_score": 680,
+      "annual_income": 360000.0
+    },
+    "expected_verdict": "SAT",
+    "expected_violations": []
+  },
+  {
+    "id": 100,
+    "query": "Report fraudulent transaction on my credit card that happened 12 days ago.",
+    "ground_truth": {
+      "action": "dispute_unauthorized",
+      "amount": 15000.0,
+      "reporting_days": 12
+    },
+    "expected_verdict": "UNSAT",
+    "expected_violations": [
+      "Credit card dispute reported after 7 days; full cardholder liability applies per RBI directions."
+    ]
+  }
+]
